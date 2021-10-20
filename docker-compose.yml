@@ -10,6 +10,8 @@ services:
         expose:
         - "27017"
         entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+        networks:
+          - dnn-profiler-net
 
     mongodb2:
         image: mongo:4
@@ -20,6 +22,8 @@ services:
         expose:
         - "27017"
         entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1"]
+        networks:
+          - dnn-profiler-net
       
     mongodb3:
         image: mongo:4
@@ -30,6 +34,8 @@ services:
         expose:
         - "27017"
         entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all", "--wiredTigerCacheSizeGB", "1" ]
+        networks:
+          - dnn-profiler-net
     
     mongosetup:
         image: "mongo-setup"
@@ -39,7 +45,12 @@ services:
             - mongodb1
         volumes:
             - mongostatus:/data/
+        networks:
+          - dnn-profiler-net
     
+networks:
+  dnn-profiler-net:
+    name: dnn
 
 volumes:
     mongodata1:
